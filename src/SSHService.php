@@ -23,6 +23,12 @@ final class SSHService
 	/** @var Authentication */
 	private $auth;
 
+	/** @var string */
+	private $host;
+
+	/** @var int */
+	private $port;
+
 
 	/**
 	 * @param Authentication  $auth
@@ -36,6 +42,24 @@ final class SSHService
 	public function __destruct()
 	{
 		$this->disconnect();
+	}
+
+
+	/**
+	 * @return string|null
+	 */
+	public function getHost(): ?string
+	{
+		return $this->host;
+	}
+
+
+	/**
+	 * @return int|null
+	 */
+	public function getPort(): ?int
+	{
+		return $this->port;
 	}
 
 
@@ -73,8 +97,8 @@ final class SSHService
 
 		$this->session = $session;
 		$this->auth = $auth;
-		//$this->host = $host;
-		//$this->port = $port;
+		$this->host = $host;
+		$this->port = $port;
 	}
 
 
