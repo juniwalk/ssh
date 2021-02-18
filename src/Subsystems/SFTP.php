@@ -7,7 +7,9 @@
 
 namespace JuniWalk\SSH\Subsystems;
 
-trait Sftp
+use JuniWalk\SSH\Exceptions\FileHandlingException;
+
+trait SFTP
 {
 	/** @var resource */
 	private $sftp;
