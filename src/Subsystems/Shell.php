@@ -19,25 +19,24 @@ trait Shell
 	 */
 	public function exec(string $command, iterable $env = []): string
 	{
-        $exec = $command.'; echo -ne "[return_code:$?]"';
-		$exec = '('.$command.'); echo -e "\n$?"';
+		$exec = $command.'; echo -ne "[return_code:$?]"';
 
 		if (!$stdout = ssh2_exec($this->session, $exec, null, $env)) {
 			throw new CommandFailedException($command);
 		}
 
-		$stderr = ssh2_fetch_stream($stdout, SSH2_STREAM_STDERR);
+        $stderr = ssh2_fetch_stream($stdout, SSH2_STREAM_STDERR);
 
-		stream_set_blocking($stdout, true);
-		stream_set_blocking($stderr, true);
+        stream_set_blocking($stderr, true);
+        stream_set_blocking($stdout, true);
 
-		$output = stream_get_contents($stdout);
+        $output = stream_get_contents($stdout);
 		fclose($stdout);
 
-		if (preg_match('/^(.*)\n+(0|-?[1-9][0-9]*)$/s', $output, $matches) && $matches[2] === "0") {
-			return $matches[1];
+		if (preg_match('/\[return_code:(.*?)\]/', $output, $match) && $match[1] !== "0") {
+			throw CommandFailedException::fromStderr($command, (int) $match[1], $stderr);
 		}
 
-		throw CommandFailedException::fromStderr($command, 1/*(int) $matches[2]*/, $stderr);
+        return preg_replace('/\[return_code:(.*?)\]/', '', $output);
 	}
 }
