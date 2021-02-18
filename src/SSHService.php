@@ -15,7 +15,6 @@ use JuniWalk\SSH\Subsystems;
 final class SSHService
 {
 	use Subsystems\SFTP;
-	use Subsystems\SCP;
 	use Subsystems\Shell;
 
 	/** @var resource */
