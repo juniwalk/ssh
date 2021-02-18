@@ -37,6 +37,8 @@ trait Shell
 			throw CommandFailedException::fromStderr($command, (int) $match[1], $stderr);
 		}
 
+		fclose($stderr);
+
         return preg_replace('/\[return_code:(.*?)\]$/i', '', $output);
 	}
 }
