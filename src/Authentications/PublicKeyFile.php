@@ -7,6 +7,8 @@
 
 namespace JuniWalk\SSH\Authentications;
 
+use JuniWalk\SSH\Authentication;
+
 class PublicKeyFile implements Authentication
 {
 	/** @var string */

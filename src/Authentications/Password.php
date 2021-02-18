@@ -7,6 +7,8 @@
 
 namespace JuniWalk\SSH\Authentications;
 
+use JuniWalk\SSH\Authentication;
+
 class Password implements Authentication
 {
 	/** @var string */

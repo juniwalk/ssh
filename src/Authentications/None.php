@@ -7,6 +7,7 @@
 
 namespace JuniWalk\SSH\Authentications;
 
+use JuniWalk\SSH\Authentication;
 use JuniWalk\SSH\Exceptions\AuthenticationException;
 
 class None implements Authentication
