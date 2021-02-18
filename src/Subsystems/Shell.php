@@ -7,18 +7,23 @@
 
 namespace JuniWalk\SSH\Subsystems;
 
+use JuniWalk\SSH\Command;
 use JuniWalk\SSH\Exceptions\CommandFailedException;
 
 trait Shell
 {
 	/**
-	 * @param  string  $command
+	 * @param  Command|string  $command
 	 * @param  string[]  $env
 	 * @return string
 	 * @throws CommandFailedException
 	 */
-	public function exec(string $command, iterable $env = []): string
+	public function exec($command, iterable $env = []): string
 	{
+		if ($command instanceof Command) {
+			$command = $command->create();
+		}
+
 		$exec = $command.'; echo -ne "[return_code:$?]"';
 
 		if (!$stdout = ssh2_exec($this->session, $exec, null, $env)) {

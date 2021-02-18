@@ -7,7 +7,7 @@
 
 namespace JuniWalk\SSH;
 
-final class ProcessFactory
+final class Command
 {
 	/** @var string */
 	private $command;
