@@ -17,14 +17,12 @@ final class CommandFailedException extends SSHException
 	 */
 	public static function fromStderr(string $command, int $code, $stderr): self
 	{
-		$command = '$ '.$command.';';
-
-		if ($error = stream_get_contents($stderr)) {
-			$command .= PHP_EOL.$error;
-		}
+		$message = '$ '.$command.';'.PHP_EOL;
+		$message .= stream_get_contents($stderr);
+		$message = trim($message);
 
 		fclose($stderr);
 
-		return new static($command, $code);
+		return new static($message, $code);
 	}
 }
