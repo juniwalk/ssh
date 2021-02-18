@@ -19,8 +19,8 @@ final class AuthenticationException extends SSHException
 	public static function fromAuth(Authentication $auth, string $message = ''): self
 	{
 		$type = get_class($auth);
-		$type = substr($type, strrpos($type, '\\'));
+		$type = substr($type, strrpos($type, '\\') +1);
 
-		return new static('Authentication of '.$type.' for user "'.$auth->getUsername().'" failed. '.$message, 500);
+		return new static('"'.$type.'" authentication for user "'.$auth->getUsername().'" failed. '.$message, 500);
 	}
 }
