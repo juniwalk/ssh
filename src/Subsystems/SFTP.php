@@ -176,10 +176,6 @@ trait SFTP
 	 */
 	public function unlink(string $remoteFile): bool
 	{
-		if ($this->isDir($remoteFile)) {
-			$this->rmdir($remoteFile);
-		}
-
 		return ssh2_sftp_unlink($this->openSftp(), $remoteFile);
 	}
 
