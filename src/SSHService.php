@@ -110,7 +110,6 @@ final class SSHService
 		$this->sftp = null;
 
 		if (is_resource($this->session)) {
-			ssh2_exec($this->session, 'exit');
 			ssh2_disconnect($this->session);
 		}
 
