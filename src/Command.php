@@ -12,6 +12,9 @@ final class Command
 	/** @var string */
 	private $command;
 
+	/** @var string */
+	private $io;
+
 	/** @var string[] */
 	private $options = [];
 
@@ -56,7 +59,35 @@ final class Command
 			$pipes .= ' | '.$pipe;
 		}
 
-		return $this->command.$options.$pipes;
+		return $this->command.$options.$this->io.$pipes;
+	}
+
+
+	/**
+	 * @param  string|null  $file
+	 * @return static
+	 */
+	public function toFile(?string $file): self
+	{
+		if (!empty($file)) {
+			$file = ' > '.$file;
+		}
+
+		$this->io = $file;
+	}
+
+
+	/**
+	 * @param  string|null  $file
+	 * @return static
+	 */
+	public function fromFile(?string $file): self
+	{
+		if (!empty($file)) {
+			$file = ' < '.$file;
+		}
+
+		$this->io = $file;
 	}
 
 
