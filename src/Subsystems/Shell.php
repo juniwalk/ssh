@@ -30,12 +30,12 @@ trait Shell
 			throw new CommandFailedException($command);
 		}
 
-        $stderr = ssh2_fetch_stream($stdout, SSH2_STREAM_STDERR);
+		$stderr = ssh2_fetch_stream($stdout, SSH2_STREAM_STDERR);
 
-        stream_set_blocking($stderr, true);
-        stream_set_blocking($stdout, true);
+		stream_set_blocking($stderr, true);
+		stream_set_blocking($stdout, true);
 
-        $output = stream_get_contents($stdout);
+		$output = stream_get_contents($stdout);
 		fclose($stdout);
 
 		if (preg_match('/\[return_code:(.*?)\]/', $output, $match) && $match[1] !== "0") {
@@ -44,6 +44,6 @@ trait Shell
 
 		fclose($stderr);
 
-        return preg_replace('/\[return_code:(.*?)\]$/i', '', $output);
+		return preg_replace('/\[return_code:(.*?)\]$/i', '', $output);
 	}
 }
