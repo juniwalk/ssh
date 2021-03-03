@@ -7,6 +7,7 @@
 
 namespace JuniWalk\SSH\Subsystems;
 
+use JuniWalk\SSH\Exceptions\CommandFailedException;
 use JuniWalk\SSH\Exceptions\FileHandlingException;
 
 trait SFTP
@@ -147,26 +148,14 @@ trait SFTP
 	 */
 	public function list(string $path): iterable
 	{
-		if (!$this->isDir($path)) {
-			throw FileHandlingException::fromFile($path, 'Directory not found');
-		}
+		try {
+			$list = $this->exec('find '.$path.'/* -maxdepth 1');
 
-		$sftp = $this->openSftp();
-		$list = [];
-
-		if (!$result = @scandir('ssh2.sftp://'.$sftp.$path, SCANDIR_SORT_ASCENDING)) {
+		} catch (CommandFailedException $e) {
 			throw FileHandlingException::fromFile($path, 'Could not list files in directory');
 		}
 
-		foreach ($result as $key => $value) {
-			if (in_array($value, ['.', '..'])) {
-				continue;
-			}
-
-			$list[$key] = $path.'/'.$value;
-		}
-
-		return $list;
+		return explode(PHP_EOL, $list);
 	}
 
 
