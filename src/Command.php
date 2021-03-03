@@ -74,6 +74,7 @@ final class Command
 		}
 
 		$this->io = $file;
+		return $this;
 	}
 
 
@@ -88,6 +89,7 @@ final class Command
 		}
 
 		$this->io = $file;
+		return $this;
 	}
 
 
