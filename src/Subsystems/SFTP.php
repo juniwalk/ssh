@@ -193,9 +193,9 @@ trait SFTP
 
 	/**
 	 * @param  string  $remoteFile
-	 * @return string[]
+	 * @return string[]|bool
 	 */
-	public function stat(string $remoteFile): iterable
+	public function stat(string $remoteFile)//: iterable
 	{
 		return ssh2_sftp_stat($this->openSftp(), $remoteFile);
 	}
