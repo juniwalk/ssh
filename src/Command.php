@@ -19,6 +19,9 @@ final class Command
 	private $options = [];
 
 	/** @var static[] */
+	private $chains = [];
+
+	/** @var static[] */
 	private $pipes = [];
 
 
@@ -49,6 +52,7 @@ final class Command
 	public function create(): string
 	{
 		$options = null;
+		$chains = null;
 		$pipes = null;
 
 		foreach ($this->options as $option) {
@@ -59,7 +63,11 @@ final class Command
 			$pipes .= ' | '.$pipe;
 		}
 
-		return $this->command.$options.$this->io.$pipes;
+		foreach ($this->chains as $chain) {
+			$chains .= '; '.$chain;
+		}
+
+		return $this->command.$options.$this->io.$pipes.$chains;
 	}
 
 
@@ -131,6 +139,17 @@ final class Command
 	public function addPipe(self $command): self
 	{
 		$this->pipes[] = $command;
+		return $this;
+	}
+
+
+	/**
+	 * @param  static  $command
+	 * @return static
+	 */
+	public function addChain(self $command): self
+	{
+		$this->chains[] = $command;
 		return $this;
 	}
 }
