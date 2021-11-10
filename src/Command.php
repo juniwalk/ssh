@@ -73,12 +73,14 @@ final class Command
 
 	/**
 	 * @param  string|null  $file
+	 * @param  bool  $append
 	 * @return static
 	 */
-	public function toFile(?string $file): self
+	public function toFile(?string $file, bool $append = false): self
 	{
 		if (!empty($file)) {
-			$file = ' > '.$file;
+			$method = $append ? ' >> ' : ' > ';
+			$file = $method.$file;
 		}
 
 		$this->io = $file;
