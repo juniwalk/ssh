@@ -15,10 +15,11 @@ trait Shell
 	/**
 	 * @param  Command|string  $command
 	 * @param  string[]  $env
+	 * @param  bool  $throwErrors
 	 * @return string
 	 * @throws CommandFailedException
 	 */
-	public function exec($command, iterable $env = []): string
+	public function exec($command, iterable $env = [], bool $throwErrors = true): string
 	{
 		if ($command instanceof Command) {
 			$command = $command->create();
@@ -38,7 +39,7 @@ trait Shell
 		$output = stream_get_contents($stdout);
 		fclose($stdout);
 
-		if (preg_match('/\[return_code:(.*?)\]/', $output, $match) && $match[1] !== '0') {
+		if ($throwErrors && preg_match('/\[return_code:(.*?)\]/', $output, $match) && $match[1] !== '0') {
 			throw CommandFailedException::fromStderr($command, (int) $match[1], $stderr);
 		}
 
