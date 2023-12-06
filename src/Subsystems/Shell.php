@@ -21,14 +21,16 @@ trait Shell
 	 */
 	public function exec($command, iterable $env = [], bool $throwErrors = true): string
 	{
+		error_clear_last();
+
 		if ($command instanceof Command) {
 			$command = $command->create();
 		}
 
 		$exec = $command.'; echo -ne "[return_code:$?]"';
 
-		if (!$stdout = ssh2_exec($this->session, $exec, null, $env)) {
-			throw new CommandFailedException($command);
+		if (!$stdout = @ssh2_exec($this->session, $exec, null, $env)) {
+			throw CommandFailedException::fromLastError($command);
 		}
 
 		$stderr = ssh2_fetch_stream($stdout, SSH2_STREAM_STDERR);
