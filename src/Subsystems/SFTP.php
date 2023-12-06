@@ -124,16 +124,21 @@ trait SFTP
 	public function list(string $path): array
 	{
 		$sftp = $this->openSftp();
+		$files = [];
 
 		if (!$list = @scandir('ssh2.sftp://'.$sftp.$path)) {
 			throw FileHandlingException::fromFile($path, 'Could not list directory');
 		}
 
 		foreach ($list as $key => $file) {
-			$list[$key] = $path.'/'.$file;
+			if (in_array($file, ['.', '..'])) {
+				continue;
+			}
+
+			$files[] = $path.'/'.$file;
 		}
 
-		return $list;
+		return $files;
 	}
 
 
