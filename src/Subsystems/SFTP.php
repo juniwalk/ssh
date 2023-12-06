@@ -129,6 +129,10 @@ trait SFTP
 			throw FileHandlingException::fromFile($path, 'Could not list directory');
 		}
 
+		foreach ($list as $key => $file) {
+			$list[$key] = $path.'/'.$file;
+		}
+
 		return $list;
 	}
 
