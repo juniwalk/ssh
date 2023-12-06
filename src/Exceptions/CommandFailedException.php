@@ -25,4 +25,13 @@ final class CommandFailedException extends SSHException
 
 		return new static($message, $code);
 	}
+
+
+	public static function fromLastError(string $command): self
+	{
+		$message = '$ '.$command.';'.PHP_EOL;
+		$lastError = error_get_last();
+
+		return new static($message.$lastError['message'], 500);
+	}
 }
