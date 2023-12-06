@@ -17,14 +17,19 @@ final class SSHService
 	use Subsystems\SFTP;
 	use Subsystems\Shell;
 
-	private Authentication $auth;
-	private string $host;
-	private int $port;
+	/** @var resource */
 	private $session;
 
-	public function __construct(Authentication $auth = null)
-	{
-		$this->auth = $auth ?: (new None('root'));
+	public function __construct(
+		private string $host = null,
+		private string $port = 22,
+		private Authentication $auth = new None('root'),
+	) {
+		if ($host === null) {
+			return;
+		}
+
+		$this->connect($this->host, $this->port, $this->auth);
 	}
 
 
@@ -53,6 +58,7 @@ final class SSHService
 
 
 	/**
+	 * @throws AuthenticationException
 	 * @throws ConnectionException
 	 */
 	public function connect(string $host, int $port = 22, Authentication $auth = null): static
