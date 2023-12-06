@@ -7,7 +7,6 @@
 
 namespace JuniWalk\SSH\Subsystems;
 
-use JuniWalk\SSH\Exceptions\CommandFailedException;
 use JuniWalk\SSH\Exceptions\FileHandlingException;
 
 trait SFTP
@@ -30,10 +29,6 @@ trait SFTP
 
 
 	/**
-	 * @param  string  $content
-	 * @param  string  $remoteFile
-	 * @param  int  $mode
-	 * @return bool
 	 * @throws FileHandlingException
 	 */
 	public function write(string $remoteFile, string $content, int $mode = 0644): bool
@@ -55,8 +50,6 @@ trait SFTP
 
 
 	/**
-	 * @param  string  $remoteFile
-	 * @return string
 	 * @throws FileHandlingException
 	 */
 	public function read(string $remoteFile): string
@@ -79,10 +72,6 @@ trait SFTP
 
 
 	/**
-	 * @param  string  $localFile
-	 * @param  string  $remoteFile
-	 * @param  int  $mode
-	 * @return bool
 	 * @throws FileHandlingException
 	 */
 	public function send(string $localFile, string $remoteFile, int $mode = 0644): bool
@@ -98,10 +87,6 @@ trait SFTP
 
 
 	/**
-	 * @param  string  $remoteFile
-	 * @param  string  $localFile
-	 * @param  bool  $overwrite
-	 * @return bool
 	 * @throws FileHandlingException
 	 */
 	public function receive(string $remoteFile, string $localFile, bool $overwrite = true): bool
@@ -115,10 +100,6 @@ trait SFTP
 
 
 	/**
-	 * @param  string  $path
-	 * @param  int  $mode
-	 * @param  bool  $recursive
-	 * @return bool
 	 * @throws FileHandlingException
 	 */
 	public function mkdir(string $path, int $mode = 0777, bool $recursive = false): bool
@@ -131,10 +112,6 @@ trait SFTP
 	}
 
 
-	/**
-	 * @param  string  $path
-	 * @return bool
-	 */
 	public function rmdir(string $path): bool
 	{
 		return ssh2_sftp_rmdir($this->openSftp(), $path);
@@ -142,73 +119,46 @@ trait SFTP
 
 
 	/**
-	 * @param  string  $path
-	 * @return string[]
 	 * @throws FileHandlingException
 	 */
-	public function list(string $path): iterable
+	public function list(string $path): array
 	{
-		try {
-			$list = $this->exec('find '.$path.'/* -maxdepth 1');
+		$sftp = $this->openSftp();
 
-		} catch (CommandFailedException $e) {
-			throw FileHandlingException::fromFile($path, 'Could not list files in directory');
+		if (!$list = @scandir('ssh2.sftp://'.$sftp.$path)) {
+			throw FileHandlingException::fromFile($path, 'Could not list directory');
 		}
 
-		return explode(PHP_EOL, $list);
+		return $list;
 	}
 
 
-	/**
-	 * @param  string  $remoteFile
-	 * @return bool
-	 */
 	public function unlink(string $remoteFile): bool
 	{
 		return ssh2_sftp_unlink($this->openSftp(), $remoteFile);
 	}
 
 
-	/**
-	 * @param  string  $remoteFile
-	 * @param  string  $link
-	 * @return bool
-	 */
 	public function symlink(string $remoteFile, string $link): bool
 	{
 		return ssh2_sftp_symlink($this->openSftp(), $remoteFile, $link);
 	}
 
 
-	/**
-	 * @param  string  $remoteFile
-	 * @param  int  $mode
-	 * @return bool
-	 */
 	public function chmod(string $remoteFile, int $mode = 0644): bool
 	{
 		return ssh2_sftp_chmod($this->openSftp(), $remoteFile, $mode);
 	}
 
 
-	/**
-	 * @param  string  $remoteFile
-	 * @return string[]|bool
-	 */
-	public function stat(string $remoteFile)//: iterable
+	public function stat(string $remoteFile): array|bool
 	{
 		return ssh2_sftp_stat($this->openSftp(), $remoteFile);
 	}
 
 
-	/**
-	 * @param  string  $path
-	 * @return bool
-	 */
 	public function isDir(string $path): bool
 	{
-		$sftp = $this->openSftp();
-
-		return is_dir('ssh2.sftp://'.$sftp.$path);
+		return is_dir('ssh2.sftp://'.$this->openSftp().$path);
 	}
 }
