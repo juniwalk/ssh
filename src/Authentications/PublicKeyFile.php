@@ -11,45 +11,18 @@ use JuniWalk\SSH\Authentication;
 
 class PublicKeyFile implements Authentication
 {
-	/** @var string */
-	private $username;
-
-	/** @var string */
-	private $publicKey;
-
-	/** @var string */
-	private $privateKey;
-
-	/** @var string */
-	private $password;
-
-
-	/**
-	 * @param string  $username
-	 * @param string  $privateKey
-	 * @param string|null  $publicKey
-	 * @param string|null  $password
-	 */
 	public function __construct(
-		string $username,
-		string $privateKey,
-		string $publicKey = null,
-		string $password = null
+		private readonly string $username,
+		private readonly string $privateKey,
+		private readonly string $publicKey = null,
+		private readonly string $password = null
 	) {
-		$this->username = $username;
-		$this->publicKey = $publicKey;
-		$this->privateKey = $privateKey;
-		$this->password = $password;
-
-		if (is_null($this->publicKey)) {
+		if (is_null($publicKey)) {
 			$this->publicKey = $privateKey.'.pub';
 		}
 	}
 
 
-	/**
-	 * @return string
-	 */
 	public function getUsername(): string
 	{
 		return $this->username;

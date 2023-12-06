@@ -11,53 +11,16 @@ use JuniWalk\SSH\Authentication;
 
 class HostBasedFile implements Authentication
 {
-	/** @var string */
-	private $username;
-
-	/** @var string */
-	private $hostname;
-
-	/** @var string */
-	private $publicKey;
-
-	/** @var string */
-	private $privateKey;
-
-	/** @var string */
-	private $password;
-
-	/** @var string */
-	private $localUser;
-
-
-	/**
-	 * @param string  $username
-	 * @param string  $hostname
-	 * @param string  $publicKey
-	 * @param string  $privateKey
-	 * @param string  $password
-	 * @param string|null  $localUser
-	 */
 	public function __construct(
-		string $username,
-		string $hostname,
-		string $publicKey,
-		string $privateKey,
-		string $password = '',
-		string $localUser = null
-	) {
-		$this->username = $username;
-		$this->hostname = $hostname;
-		$this->publicKey = $publicKey;
-		$this->privateKey = $privateKey;
-		$this->password = $password;
-		$this->localUser = $localUser;
-	}
+		private readonly string $username,
+		private readonly string $hostname,
+		private readonly string $publicKey,
+		private readonly string $privateKey,
+		private readonly string $password = '',
+		private readonly string $localUser = null,
+	) { }
 
 
-	/**
-	 * @return string
-	 */
 	public function getUsername(): string
 	{
 		return $this->username;

@@ -12,22 +12,11 @@ use JuniWalk\SSH\Exceptions\AuthenticationException;
 
 class None implements Authentication
 {
-	/** @var string */
-	private $username;
+	public function __construct(
+		private readonly string $username,
+	) { }
 
 
-	/**
-	 * @param string  $username
-	 */
-	public function __construct(string $username)
-	{
-		$this->username = $username;
-	}
-
-
-	/**
-	 * @return string
-	 */
 	public function getUsername(): string
 	{
 		return $this->username;

@@ -17,22 +17,11 @@ final class SSHService
 	use Subsystems\SFTP;
 	use Subsystems\Shell;
 
-	/** @var resource */
+	private Authentication $auth;
+	private string $host;
+	private int $port;
 	private $session;
 
-	/** @var Authentication */
-	private $auth;
-
-	/** @var string */
-	private $host;
-
-	/** @var int */
-	private $port;
-
-
-	/**
-	 * @param Authentication  $auth
-	 */
 	public function __construct(Authentication $auth = null)
 	{
 		$this->auth = $auth ?: (new None('root'));
@@ -45,27 +34,18 @@ final class SSHService
 	}
 
 
-	/**
-	 * @return string|null
-	 */
 	public function getHost(): ?string
 	{
 		return $this->host;
 	}
 
 
-	/**
-	 * @return int|null
-	 */
 	public function getPort(): ?int
 	{
 		return $this->port;
 	}
 
 
-	/**
-	 * @return bool
-	 */
 	public function isConnected(): bool
 	{
 		return is_resource($this->session);
@@ -73,10 +53,6 @@ final class SSHService
 
 
 	/**
-	 * @param  string  $host
-	 * @param  int  $port
-	 * @param  Authentication|null  $auth
-	 * @return void
 	 * @throws ConnectionException
 	 */
 	public function connect(string $host, int $port = 22, Authentication $auth = null): void
@@ -102,9 +78,6 @@ final class SSHService
 	}
 
 
-	/**
-	 * @return void
-	 */
 	public function disconnect(): void
 	{
 		$this->sftp = null;

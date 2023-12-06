@@ -9,46 +9,25 @@ namespace JuniWalk\SSH;
 
 final class Command
 {
-	/** @var string */
-	private $command;
+	private string $command;
+	private string $io;
+	private array $options = [];
+	private array $chains = [];
+	private array $pipes = [];
 
-	/** @var string */
-	private $io;
-
-	/** @var string[] */
-	private $options = [];
-
-	/** @var static[] */
-	private $chains = [];
-
-	/** @var static[] */
-	private $pipes = [];
-
-
-	/**
-	 * @param string  $command
-	 * @param string|null  $options ...
-	 */
-	public function __construct(string $command, ?string ... $options)
+	public function __construct(string $command, ?string ...$options)
 	{
 		$this->command = $command;
-
-		$this->setOptions(... $options);
+		$this->setOptions(...$options);
 	}
 
 
-	/**
-	 * @return string
-	 */
 	public function __toString(): string
 	{
 		return $this->create();
 	}
 
 
-	/**
-	 * @return string
-	 */
 	public function create(): string
 	{
 		$options = null;
@@ -71,11 +50,6 @@ final class Command
 	}
 
 
-	/**
-	 * @param  string|null  $file
-	 * @param  bool  $append
-	 * @return static
-	 */
 	public function toFile(?string $file, bool $append = false): self
 	{
 		if (!empty($file)) {
@@ -88,10 +62,6 @@ final class Command
 	}
 
 
-	/**
-	 * @param  string|null  $file
-	 * @return static
-	 */
 	public function fromFile(?string $file): self
 	{
 		if (!empty($file)) {
@@ -103,12 +73,7 @@ final class Command
 	}
 
 
-	/**
-	 * @param  string  $key
-	 * @param  string[]  $values ...
-	 * @return static
-	 */
-	public function setOption(string $key, string ... $values): self
+	public function setOption(string $key, string ...$values): self
 	{
 		if (empty($values)) {
 			$values = explode(' ', $key);
@@ -120,11 +85,7 @@ final class Command
 	}
 
 
-	/**
-	 * @param  string|null  $params ...
-	 * @return static
-	 */
-	public function setOptions(?string ... $options): self
+	public function setOptions(?string ...$options): self
 	{
 		foreach (array_filter($options) as $option) {
 			$this->setOption($option);
@@ -134,10 +95,6 @@ final class Command
 	}
 
 
-	/**
-	 * @param  static  $command
-	 * @return static
-	 */
 	public function addPipe(self $command): self
 	{
 		$this->pipes[] = $command;
@@ -145,10 +102,6 @@ final class Command
 	}
 
 
-	/**
-	 * @param  static  $command
-	 * @return static
-	 */
 	public function addChain(self $command): self
 	{
 		$this->chains[] = $command;

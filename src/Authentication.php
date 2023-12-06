@@ -11,11 +11,7 @@ use JuniWalk\SSH\Exceptions\AuthenticationException;
 
 interface Authentication
 {
-	/**
-	 * @return string
-	 */
 	public function getUsername(): string;
-
 
 	/**
 	 * @param  resource  $session

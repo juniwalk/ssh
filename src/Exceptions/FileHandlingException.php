@@ -9,11 +9,6 @@ namespace JuniWalk\SSH\Exceptions;
 
 final class FileHandlingException extends SSHException
 {
-	/**
-	 * @param  string  $file
-	 * @param  string|null  $message
-	 * @return static
-	 */
 	public static function fromFile(string $file, string $message = null): self
 	{
 		if (isset($message)) {

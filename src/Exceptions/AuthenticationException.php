@@ -11,11 +11,6 @@ use JuniWalk\SSH\Authentication;
 
 final class AuthenticationException extends SSHException
 {
-	/**
-	 * @param  Authentication  $auth
-	 * @param  string  $message
-	 * @return static
-	 */
 	public static function fromAuth(Authentication $auth, string $message = ''): self
 	{
 		$type = get_class($auth);

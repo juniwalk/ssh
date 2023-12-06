@@ -9,10 +9,6 @@ namespace JuniWalk\SSH\Exceptions;
 
 final class ConnectionException extends SSHException
 {
-	/**
-	 * @param  string  $message
-	 * @return static
-	 */
 	public static function fromLastError(string $message): self
 	{
 		$lastError = error_get_last();
