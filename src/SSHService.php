@@ -55,7 +55,7 @@ final class SSHService
 	/**
 	 * @throws ConnectionException
 	 */
-	public function connect(string $host, int $port = 22, Authentication $auth = null): void
+	public function connect(string $host, int $port = 22, Authentication $auth = null): static
 	{
 		// If there already is an active connection
 		$this->isConnected() && $this->disconnect();
@@ -75,6 +75,8 @@ final class SSHService
 		$this->auth = $auth;
 		$this->host = $host;
 		$this->port = $port;
+
+		return $this;
 	}
 
 
