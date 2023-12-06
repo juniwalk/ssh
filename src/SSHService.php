@@ -22,7 +22,7 @@ final class SSHService
 
 	public function __construct(
 		private ?string $host = null,
-		private string $port = 22,
+		private int $port = 22,
 		private Authentication $auth = new None('root'),
 	) {
 		if ($host === null) {
