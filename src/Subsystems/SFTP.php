@@ -161,4 +161,10 @@ trait SFTP
 	{
 		return is_dir('ssh2.sftp://'.$this->openSftp().$path);
 	}
+
+
+	public function createStreamPath(string $path): string
+	{
+		return 'ssh2.sftp://'.$this->openSftp().$path;
+	}
 }
