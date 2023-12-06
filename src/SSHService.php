@@ -21,7 +21,7 @@ final class SSHService
 	private $session;
 
 	public function __construct(
-		private string $host = null,
+		private ?string $host = null,
 		private string $port = 22,
 		private Authentication $auth = new None('root'),
 	) {
