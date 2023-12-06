@@ -13,13 +13,9 @@ use JuniWalk\SSH\Exceptions\CommandFailedException;
 trait Shell
 {
 	/**
-	 * @param  Command|string  $command
-	 * @param  string[]  $env
-	 * @param  bool  $throwErrors
-	 * @return string
 	 * @throws CommandFailedException
 	 */
-	public function exec($command, iterable $env = [], bool $throwErrors = true): string
+	public function exec(Command|string $command, array $env = [], bool $throwErrors = true): string
 	{
 		error_clear_last();
 
