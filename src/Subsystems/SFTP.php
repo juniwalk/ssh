@@ -112,8 +112,26 @@ trait SFTP
 	}
 
 
-	public function rmdir(string $path): bool
+	public function rmdir(string $path, bool $recursive = false): bool
 	{
+		if (!$this->isDir($path)) {
+			return false;
+		}
+
+		$items = $this->list($path);
+
+		if ($recursive) foreach ($items as $key => $item) {
+			if (!$this->rmdir($item, $recursive)) {
+				continue;
+			}
+
+			unset($items[$key]);
+		}
+
+		if (!empty($items)) {
+			return false;
+		}
+
 		return ssh2_sftp_rmdir($this->openSftp(), $path);
 	}
 
