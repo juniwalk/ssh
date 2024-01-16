@@ -7,7 +7,9 @@
 
 namespace JuniWalk\SSH\Subsystems;
 
+use JuniWalk\SSH\Authentications\Password;
 use JuniWalk\SSH\Exceptions\FileHandlingException;
+use Nette\Http\Url;
 
 trait SFTP
 {
@@ -193,5 +195,22 @@ trait SFTP
 	public function createStreamPath(string $path): string
 	{
 		return 'ssh2.sftp://'.$this->openSftp().$path;
+	}
+
+
+	public function createWebPath(string $path): Url
+	{
+		$url = new Url;
+		$url->setScheme('https');
+		$url->setUser($this->auth->getUsername());
+		$url->setPassword($password);
+		$url->setHost($this->host);
+		$url->setPath($path);
+
+		if ($this->auth instanceof Password) {
+			$url->setPassword($this->auth->getPassword());
+		}
+
+		return $url;
 	}
 }
