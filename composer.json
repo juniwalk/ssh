@@ -13,6 +13,7 @@
 
 	"require": {
 		"php": ">=8.2",
-		"ext-ssh2": "*"
+		"ext-ssh2": "*",
+		"nette/http": "^2.0"
 	}
 }
