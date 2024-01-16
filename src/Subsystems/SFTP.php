@@ -203,7 +203,6 @@ trait SFTP
 		$url = new Url;
 		$url->setScheme('https');
 		$url->setUser($this->auth->getUsername());
-		$url->setPassword($password);
 		$url->setHost($this->host);
 		$url->setPath($path);
 
