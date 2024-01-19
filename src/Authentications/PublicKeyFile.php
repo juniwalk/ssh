@@ -14,10 +14,10 @@ class PublicKeyFile implements Authentication
 	public function __construct(
 		private readonly string $username,
 		private readonly string $privateKey,
-		private readonly string $publicKey = null,
-		private readonly string $password = null
+		private readonly string $publicKey = '',
+		private readonly string $password = '',
 	) {
-		if (is_null($publicKey)) {
+		if (empty($publicKey)) {
 			$this->publicKey = $privateKey.'.pub';
 		}
 	}
@@ -40,7 +40,7 @@ class PublicKeyFile implements Authentication
 			$this->username,
 			$this->publicKey,
 			$this->privateKey,
-			$this->password ?: ''
+			$this->password,
 		);
 	}
 }
