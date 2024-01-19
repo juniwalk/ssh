@@ -13,7 +13,7 @@ use JuniWalk\SSH\Exceptions\AuthenticationException;
 class Agent implements Authentication
 {
 	public function __construct(
-		private readonly string $username,
+		private string $username,
 	) { }
 
 

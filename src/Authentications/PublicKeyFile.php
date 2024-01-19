@@ -12,10 +12,10 @@ use JuniWalk\SSH\Authentication;
 class PublicKeyFile implements Authentication
 {
 	public function __construct(
-		private readonly string $username,
-		private readonly string $privateKey,
-		private readonly string $publicKey = '',
-		private readonly string $password = '',
+		private string $username,
+		private string $privateKey,
+		private string $publicKey = '',
+		private string $password = '',
 	) {
 		if (empty($publicKey)) {
 			$this->publicKey = $privateKey.'.pub';

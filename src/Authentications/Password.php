@@ -12,8 +12,8 @@ use JuniWalk\SSH\Authentication;
 class Password implements Authentication
 {
 	public function __construct(
-		private readonly string $username,
-		private readonly string $password = ''
+		private string $username,
+		private string $password = ''
 	) { }
 
 
