@@ -10,7 +10,7 @@ namespace JuniWalk\SSH;
 final class Command
 {
 	private string $command;
-	private string $io;
+	private ?string $io = null;
 	private array $options = [];
 	private array $chains = [];
 	private array $pipes = [];
