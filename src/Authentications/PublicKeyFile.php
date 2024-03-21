@@ -8,6 +8,7 @@
 namespace JuniWalk\SSH\Authentications;
 
 use JuniWalk\SSH\Authentication;
+use SensitiveParameter;
 
 class PublicKeyFile implements Authentication
 {
@@ -15,6 +16,7 @@ class PublicKeyFile implements Authentication
 		private string $username,
 		private string $privateKey,
 		private string $publicKey = '',
+		#[SensitiveParameter]
 		private string $password = '',
 	) {
 		if (empty($publicKey)) {

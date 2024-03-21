@@ -8,11 +8,13 @@
 namespace JuniWalk\SSH\Authentications;
 
 use JuniWalk\SSH\Authentication;
+use SensitiveParameter;
 
 class Password implements Authentication
 {
 	public function __construct(
 		private string $username,
+		#[SensitiveParameter]
 		private string $password = ''
 	) { }
 

@@ -8,6 +8,7 @@
 namespace JuniWalk\SSH\Authentications;
 
 use JuniWalk\SSH\Authentication;
+use SensitiveParameter;
 
 class HostBasedFile implements Authentication
 {
@@ -16,6 +17,7 @@ class HostBasedFile implements Authentication
 		private string $hostname,
 		private string $publicKey,
 		private string $privateKey,
+		#[SensitiveParameter]
 		private string $password = '',
 		private string $localUser = null,
 	) { }
