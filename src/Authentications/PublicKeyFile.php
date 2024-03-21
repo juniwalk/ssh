@@ -32,8 +32,7 @@ class PublicKeyFile implements Authentication
 
 
 	/**
-	 * @param  resource  $session
-	 * @return bool
+	 * @param resource $session
 	 */
 	public function authenticate($session): bool
 	{

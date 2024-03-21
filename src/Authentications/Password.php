@@ -19,18 +19,12 @@ class Password implements Authentication
 	) { }
 
 
-	/**
-	 * @return string
-	 */
 	public function getUsername(): string
 	{
 		return $this->username;
 	}
 
 
-	/**
-	 * @return string
-	 */
 	public function getPassword(): string
 	{
 		return $this->password;
@@ -38,8 +32,7 @@ class Password implements Authentication
 
 
 	/**
-	 * @param  resource  $session
-	 * @return bool
+	 * @param resource $session
 	 */
 	public function authenticate($session): bool
 	{

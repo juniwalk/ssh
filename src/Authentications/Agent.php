@@ -24,8 +24,7 @@ class Agent implements Authentication
 
 
 	/**
-	 * @param  resource  $session
-	 * @return bool
+	 * @param  resource $session
 	 * @throws AuthenticationException
 	 */
 	public function authenticate($session): bool

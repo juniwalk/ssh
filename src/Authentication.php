@@ -14,8 +14,7 @@ interface Authentication
 	public function getUsername(): string;
 
 	/**
-	 * @param  resource  $session
-	 * @return bool
+	 * @param  resource $session
 	 * @throws AuthenticationException
 	 */
 	public function authenticate($session): bool;

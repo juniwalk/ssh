@@ -10,10 +10,7 @@ namespace JuniWalk\SSH\Exceptions;
 final class CommandFailedException extends SSHException
 {
 	/**
-	 * @param  string  $command
-	 * @param  int  $code
-	 * @param  resource  $stderr
-	 * @return static
+	 * @param resource $stderr
 	 */
 	public static function fromStderr(string $command, int $code, $stderr): self
 	{

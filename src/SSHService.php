@@ -63,11 +63,10 @@ final class SSHService
 	 */
 	public function connect(string $host, int $port = 22, Authentication $auth = null): static
 	{
-		// If there already is an active connection
 		$this->isConnected() && $this->disconnect();
 
 		$session = @ssh2_connect($host, $port);
-		$auth = $auth ?: $this->auth;
+		$auth ??= $this->auth;
 
 		if (!is_resource($session)) {
 			throw ConnectionException::fromLastError($host.':'.$port);
