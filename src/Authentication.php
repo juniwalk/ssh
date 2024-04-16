@@ -20,7 +20,6 @@ interface Authentication
 	 */
 	public function authenticate($session): bool;
 
-
 	/**
 	 * @throws AuthenticationException
 	 */

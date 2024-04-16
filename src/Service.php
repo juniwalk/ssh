@@ -20,7 +20,7 @@ interface Service
 	 * @throws AuthenticationException
 	 * @throws ConnectionException
 	 */
-	public function connect(string $host, int $port, Authentication $auth): static;
+	public function connect(string $host, int $port, ?Authentication $auth): static;
 
 	public function disconnect(): void;
 }
