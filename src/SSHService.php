@@ -35,7 +35,7 @@ final class SSHService implements Service
 	}
 
 
-	public function getHost(): ?string
+	public function getHost(): string
 	{
 		return $this->host;
 	}

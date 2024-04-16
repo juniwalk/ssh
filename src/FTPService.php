@@ -34,7 +34,7 @@ final class FTPService implements Service
 	}
 
 
-	public function getHost(): ?string
+	public function getHost(): string
 	{
 		return $this->host;
 	}

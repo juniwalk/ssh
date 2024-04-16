@@ -12,7 +12,7 @@ use JuniWalk\SSH\Exceptions\ConnectionException;
 
 interface Service
 {
-	public function getHost(): ?string;
+	public function getHost(): string;
 	public function getPort(): int;
 	public function isConnected(): bool;
 
