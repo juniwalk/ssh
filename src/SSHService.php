@@ -65,6 +65,10 @@ final class SSHService implements Service
 	{
 		$this->isConnected() && $this->disconnect();
 
+		if (!function_exists('ssh2_connect')) {
+			throw ConnectionException::fromExtension('ext-ssh2');
+		}
+
 		$session = @ssh2_connect($host, $port);
 
 		if (!is_resource($session)) {

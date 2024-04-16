@@ -70,6 +70,10 @@ final class FTPService implements Service
 	{
 		$this->isConnected() && $this->disconnect();
 
+		if (!function_exists('ftp_connect')) {
+			throw ConnectionException::fromExtension('ext-ftp');
+		}
+
 		$session = match (true) {
 			str_starts_with($host, 'ftps://')	=> ftp_ssl_connect($host, $port),
 			str_starts_with($host, 'ftp://')	=> ftp_connect($host, $port),

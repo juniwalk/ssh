@@ -9,6 +9,12 @@ namespace JuniWalk\SSH\Exceptions;
 
 final class ConnectionException extends SSHException
 {
+	public static function fromExtension(string $ext): self
+	{
+		return new static('Extension "'.$ext.'" is not loaded.', 500);
+	}
+
+
 	public static function fromLastError(string $message): self
 	{
 		$lastError = error_get_last()['message'] ?? '';
