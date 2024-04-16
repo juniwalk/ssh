@@ -74,11 +74,17 @@ final class FTPService implements Service
 			throw ConnectionException::fromExtension('ext-ftp');
 		}
 
-		$session = match (true) {
-			str_starts_with($host, 'ftps://')	=> ftp_ssl_connect($host, $port),
-			str_starts_with($host, 'ftp://')	=> ftp_connect($host, $port),
+		if (!preg_match('#^\w+://#', $host)) {
+			$host = 'ftp://'.$host;
+		}
 
-			default => throw ConnectionException::fromProtocol($host.':'.$port, ['ftp', 'ftps']),
+		[$schema, $host] = explode('://', $host);
+
+		$session = match ($schema) {
+			'ftps'	=> ftp_ssl_connect($host, $port),
+			'ftp'	=> ftp_connect($host, $port),
+
+			default => throw ConnectionException::fromProtocol($schema, $host.':'.$port),
 		};
 
 		if (!$session instanceof Connection) {

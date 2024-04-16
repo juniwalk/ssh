@@ -22,11 +22,8 @@ final class ConnectionException extends SSHException
 	}
 
 
-	/**
-	 * @param string[] $protocols
-	 */
-	public static function fromProtocol(string $host, array $protocols): self
+	public static function fromProtocol(string $protocol, string $host): self
 	{
-		return new static('Host "'.$host.'" is missing one of '.implode(', ', $protocols).' protocols.', 500);
+		return new static('Unknown protocol "'.$protocol.'" used for "'.$host.'".', 500);
 	}
 }
