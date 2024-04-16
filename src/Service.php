@@ -7,6 +7,9 @@
 
 namespace JuniWalk\SSH;
 
+use JuniWalk\SSH\Exceptions\AuthenticationException;
+use JuniWalk\SSH\Exceptions\ConnectionException;
+
 interface Service
 {
 	public function getHost(): ?string;

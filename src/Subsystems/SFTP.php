@@ -8,17 +8,19 @@
 namespace JuniWalk\SSH\Subsystems;
 
 use JuniWalk\SSH\Authentications\Password;
+use JuniWalk\SSH\Exceptions\ConnectionException;
 use JuniWalk\SSH\Exceptions\FileHandlingException;
 use Nette\Http\Url;
 
 trait SFTP
 {
-	/** @var resource */
+	/** @var resource|null */
 	private $sftp;
 
 
 	/**
 	 * @return resource
+	 * @throws ConnectionException
 	 */
 	private function openSftp()
 	{
@@ -26,7 +28,11 @@ trait SFTP
 			return $this->sftp;
 		}
 
-		return $this->sftp = ssh2_sftp($this->session);
+		if (!$sftp = @ssh2_sftp($this->session)) {
+			throw ConnectionException::fromLastError('Unable to open SFTP.');
+		}
+
+		return $this->sftp = $sftp;
 	}
 
 
@@ -139,6 +145,7 @@ trait SFTP
 
 
 	/**
+	 * @return string[]
 	 * @throws FileHandlingException
 	 */
 	public function list(string $path): array
@@ -180,7 +187,10 @@ trait SFTP
 	}
 
 
-	public function stat(string $remoteFile): array|bool
+	/**
+	 * @return mixed[]|false
+	 */
+	public function stat(string $remoteFile): array|false
 	{
 		return ssh2_sftp_stat($this->openSftp(), $remoteFile);
 	}

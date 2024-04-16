@@ -21,15 +21,11 @@ final class SSHService implements Service
 	private $session;
 
 	public function __construct(
-		private ?string $host = null,
+		private string $host = '',
 		private int $port = 22,
 		private Authentication $auth = new None('root'),
 	) {
-		if ($host === null) {
-			return;
-		}
-
-		$this->connect($host, $port, $auth);
+		$host && $this->connect($host, $port, $auth);
 	}
 
 
@@ -66,13 +62,14 @@ final class SSHService implements Service
 		$this->isConnected() && $this->disconnect();
 
 		$session = @ssh2_connect($host, $port);
-		$auth ??= $this->auth;
 
 		if (!is_resource($session)) {
 			throw ConnectionException::fromLastError($host.':'.$port);
 		}
 
-		if (!$auth || !$auth->authenticate($session)) {
+		$auth ??= $this->auth;
+
+		if (!$auth->authenticate($session)) {
 			throw AuthenticationException::fromAuth($auth);
 		}
 
@@ -87,12 +84,13 @@ final class SSHService implements Service
 
 	public function disconnect(): void
 	{
-		$this->sftp = null;
+		// $this->sftp = null;
+		unset($this->sftp);
 
 		if ($this->isConnected()) {
 			ssh2_disconnect($this->session);
 		}
 
-		$this->session = null;
+		unset($this->session);
 	}
 }

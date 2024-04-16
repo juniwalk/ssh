@@ -18,7 +18,10 @@ trait FTP
 	 */
 	public function write(string $remoteFile, string $content, int $mode = 0644): bool
 	{
-		$stream = fopen('php://temp', 'r+');
+		if (!$stream = @fopen('php://temp', 'r+')) {
+			throw FileHandlingException::fromLastError('Unable to open temp file.');
+		}
+
 		fwrite($stream, $content);
 		rewind($stream);
 
@@ -28,7 +31,7 @@ trait FTP
 
 		fclose($stream);
 
-		return $this->chmod($remoteFile, $mode);
+		return (bool) $this->chmod($remoteFile, $mode);
 	}
 
 
@@ -37,7 +40,9 @@ trait FTP
 	 */
 	public function read(string $remoteFile): string
 	{
-		$stream = fopen('php://temp', 'r+');
+		if (!$stream = @fopen('php://temp', 'r+')) {
+			throw FileHandlingException::fromLastError('Unable to open temp file.');
+		}
 
 		if (!ftp_fget($this->session, $stream, $remoteFile)) {
 			throw FileHandlingException::fromFile($remoteFile, 'Could not write data to file');

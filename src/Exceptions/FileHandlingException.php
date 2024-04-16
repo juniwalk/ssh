@@ -9,6 +9,13 @@ namespace JuniWalk\SSH\Exceptions;
 
 final class FileHandlingException extends SSHException
 {
+	public static function fromLastError(string $message): self
+	{
+		$lastError = error_get_last()['message'] ?? '';
+		return new static($message.' | '.$lastError, 500);
+	}
+
+
 	public static function fromFile(string $file, string $message = null): self
 	{
 		if (isset($message)) {

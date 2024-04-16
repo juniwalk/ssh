@@ -21,7 +21,7 @@ class HostBasedFile implements Authentication
 		private string $privateKey,
 		#[SensitiveParameter]
 		private string $password = '',
-		private string $localUser = null,
+		private string $localUser = '',
 	) {
 	}
 

@@ -10,25 +10,26 @@ namespace JuniWalk\SSH\Exceptions;
 final class CommandFailedException extends SSHException
 {
 	/**
-	 * @param resource $stderr
+	 * @param resource|false $stderr
 	 */
 	public static function fromStderr(string $command, int $code, $stderr): self
 	{
 		$message = '$ '.$command.';'.PHP_EOL;
-		$message .= stream_get_contents($stderr);
-		$message = trim($message);
 
-		fclose($stderr);
+		if ($stderr !== false) {
+			$message .= stream_get_contents($stderr);
+			fclose($stderr);
+		}
 
-		return new static($message, $code);
+		return new static(trim($message), $code);
 	}
 
 
 	public static function fromLastError(string $command): self
 	{
+		$lastError = error_get_last()['message'] ?? '';
 		$message = '$ '.$command.';'.PHP_EOL;
-		$lastError = error_get_last();
 
-		return new static($message.$lastError['message'], 500);
+		return new static($message.$lastError, 500);
 	}
 }

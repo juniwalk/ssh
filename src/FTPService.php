@@ -20,15 +20,11 @@ final class FTPService implements Service
 	private Connection $session;
 
 	public function __construct(
-		private ?string $host = null,
+		private string $host = '',
 		private int $port = 21,
 		private Authentication $auth = new None('anonymous'),
 	) {
-		if ($host === null) {
-			return;
-		}
-
-		$this->connect($host, $port, $auth);
+		$host && $this->connect($host, $port, $auth);
 	}
 
 
@@ -70,7 +66,6 @@ final class FTPService implements Service
 	{
 		$this->isConnected() && $this->disconnect();
 
-		$auth ??= $this->auth;
 		$session = match (true) {
 			str_starts_with($host, 'ftps://')	=> ftp_ssl_connect($host, $port),
 			str_starts_with($host, 'ftp://')	=> ftp_connect($host, $port),
@@ -82,7 +77,9 @@ final class FTPService implements Service
 			throw ConnectionException::fromLastError($host.':'.$port);
 		}
 
-		if (!$auth || !$auth->login($session)) {
+		$auth ??= $this->auth;
+
+		if (!$auth->login($session)) {
 			throw AuthenticationException::fromAuth($auth);
 		}
 
@@ -101,6 +98,6 @@ final class FTPService implements Service
 			ftp_close($this->session);
 		}
 
-		$this->session = null;
+		unset($this->session);
 	}
 }

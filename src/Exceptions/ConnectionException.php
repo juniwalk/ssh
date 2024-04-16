@@ -11,11 +11,14 @@ final class ConnectionException extends SSHException
 {
 	public static function fromLastError(string $message): self
 	{
-		$lastError = error_get_last();
-		return new static($message.' | '.$lastError['message'], 500);
+		$lastError = error_get_last()['message'] ?? '';
+		return new static($message.' | '.$lastError, 500);
 	}
 
 
+	/**
+	 * @param string[] $protocols
+	 */
 	public static function fromProtocol(string $host, array $protocols): self
 	{
 		return new static('Host "'.$host.'" is missing one of '.implode(', ', $protocols).' protocols.', 500);

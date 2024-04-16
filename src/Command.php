@@ -11,8 +11,14 @@ final class Command
 {
 	private string $command;
 	private ?string $io = null;
+
+	/** @var array<array<int, string>> */
 	private array $options = [];
+
+	/** @var static[] */
 	private array $chains = [];
+
+	/** @var static[] */
 	private array $pipes = [];
 
 	public function __construct(string $command, ?string ...$options)
@@ -34,8 +40,8 @@ final class Command
 		$chains = null;
 		$pipes = null;
 
-		foreach ($this->options as $option) {
-			$options .= ' '.(trim($option[0].' '.implode(' ', $option[1])));
+		foreach ($this->options as [$key, $option]) {
+			$options .= ' '.trim($key.' '.$option);
 		}
 
 		foreach ($this->pipes as $pipe) {
@@ -80,7 +86,10 @@ final class Command
 			$key = array_shift($values);
 		}
 
-		$this->options[] = [$key, $values];
+		foreach ($values as $value) {
+			$this->options[] = [$key, $value];
+		}
+
 		return $this;
 	}
 
