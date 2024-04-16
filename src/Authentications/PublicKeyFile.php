@@ -7,7 +7,9 @@
 
 namespace JuniWalk\SSH\Authentications;
 
+use FTP\Connection;
 use JuniWalk\SSH\Authentication;
+use JuniWalk\SSH\Exceptions\AuthenticationException;
 use SensitiveParameter;
 
 class PublicKeyFile implements Authentication
@@ -43,5 +45,14 @@ class PublicKeyFile implements Authentication
 			$this->privateKey,
 			$this->password,
 		);
+	}
+
+
+	/**
+	 * @throws AuthenticationException
+	 */
+	public function login(Connection $session): bool
+	{
+		throw AuthenticationException::fromAuth($this, 'Method not available.');
 	}
 }

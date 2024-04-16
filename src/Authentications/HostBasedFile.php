@@ -9,6 +9,7 @@ namespace JuniWalk\SSH\Authentications;
 
 use FTP\Connection;
 use JuniWalk\SSH\Authentication;
+use JuniWalk\SSH\Exceptions\AuthenticationException;
 use SensitiveParameter;
 
 class HostBasedFile implements Authentication
