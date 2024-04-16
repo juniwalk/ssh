@@ -57,7 +57,7 @@ final class SSHService implements Service
 	 * @throws AuthenticationException
 	 * @throws ConnectionException
 	 */
-	public function connect(string $host, int $port = 22, Authentication $auth = null): static
+	public function connect(string $host, int $port = 22, ?Authentication $auth = null): static
 	{
 		$this->isConnected() && $this->disconnect();
 
@@ -84,7 +84,6 @@ final class SSHService implements Service
 
 	public function disconnect(): void
 	{
-		// $this->sftp = null;
 		unset($this->sftp);
 
 		if ($this->isConnected()) {

@@ -62,7 +62,7 @@ final class FTPService implements Service
 	 * @throws AuthenticationException
 	 * @throws ConnectionException
 	 */
-	public function connect(string $host, int $port = 21, Authentication $auth = null): static
+	public function connect(string $host, int $port = 21, ?Authentication $auth = null): static
 	{
 		$this->isConnected() && $this->disconnect();
 
