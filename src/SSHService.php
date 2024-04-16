@@ -12,7 +12,7 @@ use JuniWalk\SSH\Exceptions\AuthenticationException;
 use JuniWalk\SSH\Exceptions\ConnectionException;
 use JuniWalk\SSH\Subsystems;
 
-final class SSHService
+final class SSHService implements Service
 {
 	use Subsystems\SFTP;
 	use Subsystems\Shell;
@@ -29,7 +29,7 @@ final class SSHService
 			return;
 		}
 
-		$this->connect($this->host, $this->port, $this->auth);
+		$this->connect($host, $port, $auth);
 	}
 
 
@@ -45,7 +45,7 @@ final class SSHService
 	}
 
 
-	public function getPort(): ?int
+	public function getPort(): int
 	{
 		return $this->port;
 	}
@@ -89,7 +89,7 @@ final class SSHService
 	{
 		$this->sftp = null;
 
-		if (is_resource($this->session)) {
+		if ($this->isConnected()) {
 			ssh2_disconnect($this->session);
 		}
 
