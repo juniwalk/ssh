@@ -7,6 +7,7 @@
 
 namespace JuniWalk\SSH\Authentications;
 
+use FTP\Connection;
 use JuniWalk\SSH\Authentication;
 use SensitiveParameter;
 
@@ -20,7 +21,8 @@ class HostBasedFile implements Authentication
 		#[SensitiveParameter]
 		private string $password = '',
 		private string $localUser = null,
-	) { }
+	) {
+	}
 
 
 	public function getUsername(): string
@@ -41,7 +43,16 @@ class HostBasedFile implements Authentication
 			$this->publicKey,
 			$this->privateKey,
 			$this->password,
-			$this->localUser
+			$this->localUser,
 		);
+	}
+
+
+	/**
+	 * @throws AuthenticationException
+	 */
+	public function login(Connection $session): bool
+	{
+		throw AuthenticationException::fromAuth($this, 'Method not available.');
 	}
 }

@@ -7,6 +7,7 @@
 
 namespace JuniWalk\SSH\Authentications;
 
+use FTP\Connection;
 use JuniWalk\SSH\Authentication;
 use JuniWalk\SSH\Exceptions\AuthenticationException;
 
@@ -14,7 +15,8 @@ class None implements Authentication
 {
 	public function __construct(
 		private string $username,
-	) { }
+	) {
+	}
 
 
 	public function getUsername(): string
@@ -35,6 +37,16 @@ class None implements Authentication
 			return $result;
 		}
 
-		throw AuthenticationException::fromAuth($this, 'Method not available, use one of '.implode(', ', $result));
+		throw AuthenticationException::fromAuth($this, 'Method not available, use one of '.implode(', ', $result).'.');
+	}
+
+
+	/**
+	 * @throws AuthenticationException
+	 */
+	public function login(Connection $session): bool
+	{
+		// Throws warning on bad authentication
+		return @ftp_login($session, $this->username, '');
 	}
 }

@@ -7,6 +7,7 @@
 
 namespace JuniWalk\SSH\Authentications;
 
+use FTP\Connection;
 use JuniWalk\SSH\Authentication;
 use SensitiveParameter;
 
@@ -15,8 +16,9 @@ class Password implements Authentication
 	public function __construct(
 		private string $username,
 		#[SensitiveParameter]
-		private string $password = ''
-	) { }
+		private string $password = '',
+	) {
+	}
 
 
 	public function getUsername(): string
@@ -38,5 +40,15 @@ class Password implements Authentication
 	{
 		// Throws warning on bad authentication
 		return @ssh2_auth_password($session, $this->username, $this->password);
+	}
+
+
+	/**
+	 * @throws AuthenticationException
+	 */
+	public function login(Connection $session): bool
+	{
+		// Throws warning on bad authentication
+		return @ftp_login($session, $this->username, $this->password);
 	}
 }

@@ -7,6 +7,7 @@
 
 namespace JuniWalk\SSH;
 
+use FTP\Connection;
 use JuniWalk\SSH\Exceptions\AuthenticationException;
 
 interface Authentication
@@ -18,4 +19,10 @@ interface Authentication
 	 * @throws AuthenticationException
 	 */
 	public function authenticate($session): bool;
+
+
+	/**
+	 * @throws AuthenticationException
+	 */
+	public function login(Connection $session): bool;
 }
