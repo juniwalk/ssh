@@ -49,6 +49,10 @@ final class SSHService implements Service
 
 	public function isConnected(): bool
 	{
+		if (!isset($this->session)) {
+			return false;
+		}
+
 		return is_resource($this->session);
 	}
 
