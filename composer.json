@@ -1,19 +1,41 @@
 {
 	"name": "juniwalk/ssh",
+	"description": "Package for comunicating using SSH or FTP services.",
+	"type": "library",
+	"keywords": ["nette","nettefw","ssh","sftp","ftp","ftps"],
 	"license": "MIT",
 
 	"authors": [{
 		"name": "Martin Procházka",
-		"email": "juniwalk@outlook.cz"
+		"email": "juniwalk@outlook.cz",
+		"role": "Developer"
 	}],
 
 	"autoload": {
 		"psr-4": {"JuniWalk\\SSH\\": "src/"}
 	},
 
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"sort-packages": true,
+		"allow-plugins": {
+			"phpstan/extension-installer": true
+		}
+	},
+
 	"require": {
 		"php": ">=8.2",
 		"ext-ssh2": "*",
+		"ext-ftp": "*",
 		"nette/http": "^3.0"
+	},
+
+	"require-dev": {
+		"nette/tester": "^2.5",
+		"phpstan/extension-installer": "^1.0",
+		"phpstan/phpstan": "^1.0",
+		"phpstan/phpstan-nette": "^1.0",
+		"staabm/phpstan-todo-by": "^0.1"
 	}
 }
