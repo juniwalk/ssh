@@ -22,32 +22,32 @@ final class ConnectionTest extends TestCase
 
 	public function testConnectFTP(): void
 	{
-		$ftp = new FTPService('ftp://test.rebex.net');
-		Assert::same($ftp->isConnected(), true);
-		Assert::same($ftp->getHost(), 'test.rebex.net');
+		$ftp = new FTPService('ftp://'.HOSTNAME);
+		Assert::same($ftp->getHost(), HOSTNAME);
+		Assert::true($ftp->isConnected());
 	}
 
 	public function testConnectSSL(): void
 	{
-		$ftp = new FTPService('ftps://test.rebex.net');
-		Assert::same($ftp->isConnected(), true);
-		Assert::same($ftp->getHost(), 'test.rebex.net');
+		$ftp = new FTPService('ftps://'.HOSTNAME);
+		Assert::same($ftp->getHost(), HOSTNAME);
+		Assert::true($ftp->isConnected());
 	}
 
 	public function testConnectWithoutProtocol(): void
 	{
-		$ftp = new FTPService('test.rebex.net');
-		Assert::same($ftp->isConnected(), true);
-		Assert::same($ftp->getHost(), 'test.rebex.net');
+		$ftp = new FTPService(HOSTNAME);
+		Assert::same($ftp->getHost(), HOSTNAME);
+		Assert::true($ftp->isConnected());
 	}
 
 	public function testConnectWithPassword(): void
 	{
-		$auth = new Password('demo', 'password');
-		$ftp = new FTPService('test.rebex.net', 21, $auth);
+		$auth = new Password(USERNAME, PASSWORD);
+		$ftp = new FTPService(HOSTNAME, 21, $auth);
 
-		Assert::same($ftp->isConnected(), true);
-		Assert::same($ftp->getHost(), 'test.rebex.net');
+		Assert::same($ftp->getHost(), HOSTNAME);
+		Assert::true($ftp->isConnected());
 	}
 }
 

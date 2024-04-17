@@ -22,10 +22,11 @@ final class ConnectionTest extends TestCase
 
 	public function testConnect(): void
 	{
-		$auth = new Password('demo', 'password');
-		$ftp = new SSHService('test.rebex.net', 22, $auth);
+		$auth = new Password(USERNAME, PASSWORD);
+		$ftp = new SSHService(HOSTNAME, 22, $auth);
 
-		Assert::same($ftp->isConnected(), true);
+		Assert::same($ftp->getHost(), HOSTNAME);
+		Assert::true($ftp->isConnected());
 	}
 
 	/**
@@ -34,7 +35,7 @@ final class ConnectionTest extends TestCase
 	public function testConnectAnonymouse(): void
 	{
 		// Auth None is not supported
-		$ftp = new SSHService('test.rebex.net');
+		$ftp = new SSHService(HOSTNAME);
 	}
 }
 

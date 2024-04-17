@@ -10,3 +10,7 @@ use Tester\Environment;
 require __DIR__.'/../vendor/autoload.php';
 
 Environment::setup();
+
+const HOSTNAME = 'test.rebex.net';
+const USERNAME = 'demo';
+const PASSWORD = 'password';
