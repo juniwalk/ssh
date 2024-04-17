@@ -6,6 +6,7 @@
  */
 
 use JuniWalk\SSH\Authentications\Password;
+use JuniWalk\SSH\Exceptions\AuthenticationException;
 use JuniWalk\SSH\SSHService;
 use Tester\Assert;
 use Tester\TestCase;
@@ -29,13 +30,13 @@ final class ConnectionTest extends TestCase
 		Assert::true($ftp->isConnected());
 	}
 
-	/**
-	 * @throws JuniWalk\SSH\Exceptions\AuthenticationException
-	 */
 	public function testConnectAnonymouse(): void
 	{
-		// Auth None is not supported
-		$ftp = new SSHService(HOSTNAME);
+		Assert::exception(
+			fn() => new SSHService(HOSTNAME),
+			AuthenticationException::class,
+			'"%w%" authentication for user "%w%" failed. Method not available%A%',
+		);
 	}
 }
 
