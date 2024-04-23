@@ -49,7 +49,7 @@ final class SSHService implements Service
 
 	public function isConnected(): bool
 	{
-		return is_resource($this->session);
+		return isset($this->session) && is_resource($this->session);
 	}
 
 
