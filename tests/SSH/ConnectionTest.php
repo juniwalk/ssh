@@ -11,7 +11,7 @@ use JuniWalk\SSH\SSHService;
 use Tester\Assert;
 use Tester\TestCase;
 
-require '../bootstrap.php';
+require __DIR__.'/../bootstrap.php';
 
 /**
  * @testCase
@@ -23,17 +23,17 @@ final class ConnectionTest extends TestCase
 
 	public function testConnect(): void
 	{
-		$auth = new Password(USERNAME, PASSWORD);
-		$ftp = new SSHService(HOSTNAME, 22, $auth);
+		$auth = new Password(Username, Password);
+		$ssh = new SSHService(Hostname, auth: $auth);
 
-		Assert::same($ftp->getHost(), HOSTNAME);
-		Assert::true($ftp->isConnected());
+		Assert::same($ssh->getHost(), Hostname);
+		Assert::true($ssh->isConnected());
 	}
 
 	public function testConnectAnonymouse(): void
 	{
 		Assert::exception(
-			fn() => new SSHService(HOSTNAME),
+			fn() => new SSHService(Hostname),
 			AuthenticationException::class,
 			'"%w%" authentication for user "%w%" failed. Method not available%A%',
 		);

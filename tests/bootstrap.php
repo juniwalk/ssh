@@ -6,11 +6,16 @@
  */
 
 use Tester\Environment;
+use Tracy\Debugger;
 
-require __DIR__.'/../vendor/autoload.php';
+if (@!include __DIR__.'/../vendor/autoload.php') {
+	echo 'Install Nette Tester using `composer install`';
+	exit(1);
+}
 
+Debugger::enable(Debugger::Development);
 Environment::setup();
 
-const HOSTNAME = 'test.rebex.net';
-const USERNAME = 'demo';
-const PASSWORD = 'password';
+const Hostname = 'test.rebex.net';
+const Username = 'demo';
+const Password = 'password';

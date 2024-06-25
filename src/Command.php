@@ -84,6 +84,7 @@ final class Command
 		if (empty($values)) {
 			$values = explode(' ', $key);
 			$key = array_shift($values);
+			$values = array_pad($values, 1, null);
 		}
 
 		foreach ($values as $value) {
