@@ -82,9 +82,7 @@ final class Command
 	public function setOption(string $key, string ...$values): self
 	{
 		if (empty($values)) {
-			$values = explode(' ', $key);
-			$key = array_shift($values);
-			$values = array_pad($values, 1, null);
+			$values[0] = null;
 		}
 
 		foreach ($values as $value) {
