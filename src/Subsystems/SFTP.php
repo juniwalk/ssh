@@ -28,7 +28,7 @@ trait SFTP
 			return $this->sftp;
 		}
 
-		if (!$sftp = @ssh2_sftp($this->session)) {
+		if (!$this->isConnected() || !$sftp = @ssh2_sftp($this->session)) {
 			throw ConnectionException::fromLastError('Unable to open SFTP.');
 		}
 
