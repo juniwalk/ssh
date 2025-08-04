@@ -12,7 +12,7 @@ final class Command
 	private string $command;
 	private ?string $io = null;
 
-	/** @var array<array<int, string>> */
+	/** @var array<array<int, ?string>> */
 	private array $options = [];
 
 	/** @var static[] */

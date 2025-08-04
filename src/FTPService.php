@@ -54,11 +54,7 @@ final class FTPService implements Service
 
 	public function isConnected(): bool
 	{
-		if (!isset($this->session)) {
-			return false;
-		}
-
-		return $this->session instanceof Connection;
+		return isset($this->session);
 	}
 
 

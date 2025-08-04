@@ -51,7 +51,7 @@ trait FTP
 		$contents = stream_get_contents($stream);
 		fclose($stream);
 
-		if ($contents === false) {
+		if ($contents === false) { // @phpstan-ignore identical.alwaysFalse (Bug phpstan/phpstan#13289)
 			throw FileHandlingException::fromFile($remoteFile, 'Unable to read remote file');
 		}
 

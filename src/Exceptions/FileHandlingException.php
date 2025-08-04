@@ -16,7 +16,7 @@ final class FileHandlingException extends SSHException
 	}
 
 
-	public static function fromFile(string $file, string $message = null): self
+	public static function fromFile(string $file, ?string $message = null): self
 	{
 		if (isset($message)) {
 			$file = $message.': '.$file;
